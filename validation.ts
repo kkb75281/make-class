@@ -16,7 +16,7 @@ class Validation {
         this.target = target;
         this.what = what;
     }
-
+    
     isValid() {
         let results = this.target.map(item => {
             let validation = this.validate(item);
@@ -108,6 +108,6 @@ class Validation {
     }
 }
 
-let valid = new Validation(['dodo', 'dodo', 'dodo'], 'password_confirm');
+let valid = new Validation(['dodo', 'dodo'], 'password_confirm');
 
 console.log(valid.isValid());

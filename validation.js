@@ -30,6 +30,12 @@ class Validation {
                 return this.checkPhone(item);
             case 'password_confirm':
                 return this.checkPassword();
+            case 'only_KOR':
+                return this.checkKorean(item);
+            case 'only_ENG':
+                return this.checkEnglish(item);
+            case 'has_SPC':
+                return this.checkHasSpecialChars(item);
             default:
                 return { isValid: false, reason: 'Unknown validation type' };
         }
@@ -61,6 +67,21 @@ class Validation {
         password1 === password2 ? isValid = true : isValid = false;
         return { isValid, reason: isValid ? '' : 'Passwords do not match' };
     }
+    checkKorean(item) {
+        let koreanRegex = /^[가-힣]*$/;
+        let isValid = koreanRegex.test(item);
+        return { isValid, value: item, reason: isValid ? '' : 'Text must contain only Korean characters' };
+    }
+    checkEnglish(item) {
+        let englishRegex = /^[a-zA-Z]*$/;
+        let isValid = englishRegex.test(item);
+        return { isValid, value: item, reason: isValid ? '' : 'Text must contain only English characters' };
+    }
+    checkHasSpecialChars(item) {
+        let hasSpecialCharsRegex = /[!@#$%^&*(),.?":{}|<>]/;
+        let isValid = hasSpecialCharsRegex.test(item);
+        return { isValid, value: item, reason: isValid ? '' : 'Text must not contain special characters' };
+    }
 }
-let valid = new Validation(['dodo', 'dodo', 'dodo'], 'password_confirm');
+let valid = new Validation(['dodo', 'dodo'], 'password_confirm');
 console.log(valid.isValid());
